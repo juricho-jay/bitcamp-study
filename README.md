@@ -1,4 +1,11 @@
 # bitcamp-study
 
 ## 1일차
-- 아무거나 다시해봐용
+- git config --global user.email "---"
+  git config --global user.name "---"
+
+
+- git add .
+- git commit -m "update what you've changed"
+- git push
+

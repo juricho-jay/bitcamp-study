@@ -6,6 +6,6 @@
 - git config --global user.name "your ID"
 
 - After setting the "git config", upload your file!
-- git add . (. contains all your file that you've changed, added, or deleted)
+- git add . (. contains all your files that you've changed, added, or deleted)
 - git commit -m "detailed backup note"
 - git push (enter username and token)

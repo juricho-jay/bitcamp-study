@@ -35,6 +35,6 @@
 OTHERS
 - JCK (JRE + Development kit) > JRE (JVM + Library files) > JVM (Java Virtual Machine)
 - bytecode: virtual machine language run by JVM
-- Command Line Interface (CLI) ex: console, cmd
+- Command Line Interface (CLI) ex: console, cmd-0
 - VSCode edits source files
 - Emulator (ex:Rosetta 2): Convert/emulate CPU instructions to a certain instruction

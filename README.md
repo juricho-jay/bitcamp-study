@@ -126,11 +126,11 @@ OTHERS
             - If you exetcute a build task with this plugin installed, files that can be distributed to customers are created in a build/distributions folder.
             - Also, a script file that can run the Java program is created automatically.
     - Summary
-        - 1) Prepare a project foler by executing a init task.
-        - 2) Set up the plugin in build script that contains a build task.
-        - 3) Set up information that are needed when executing each plugin task.
-        - 3) Set up referenced library files you want use in your projects.
-        - 4) Build the application by executing tasks you needed.
+        - 1. Prepare a project foler by executing a init task.
+        - 2. Set up the plugin in build script that contains a build task.
+        - 3. Set up information that are needed when executing each plugin task.
+        - 4. Set up referenced library files you want use in your projects.
+        - 5. Build the application by executing tasks you needed.
 
 ## Day 5
 - Programming tools (Cont.)

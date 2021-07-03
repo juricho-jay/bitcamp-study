@@ -71,3 +71,5 @@ OTHERS
         - Step 2: Divide src files and .class files by using a src folder and bin folder
         - Step 3: Standard directory structure of Maven project
         - Step 4: Creating multiple projects in git repo.
+
+## Day 4 test

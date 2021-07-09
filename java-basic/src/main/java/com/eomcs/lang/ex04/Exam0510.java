@@ -29,10 +29,10 @@ public class Exam0510 {
     // 배열의 최대 크기 = Integer.MAX_VALUE - 2
 
     //int[] arr3 = new int[2147483647]; // 실행 오류 => VM의 배열 크기 제한을 초과
-    // avaException in thread "main" j.lang.OutOfMemoryError: Requested array size exceeds VM limit
+    // Exception in thread "main" j.lang.OutOfMemoryError: Requested array size exceeds VM limit
 
-    int[] arr3 = new int[2147483645]; // OK!
-    //int[] arr3 = new int[Integer.MAX_VALUE - 2]; // OK!
+    //int[] arr3 = new int[2147483645]; // OK!
+    int[] arr3 = new int[Integer.MAX_VALUE - 2]; // OK!
 
     // 실행 오류 발생!
     // => Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
@@ -43,6 +43,7 @@ public class Exam0510 {
     // => JVM 실행 옵션에 다음을 추가하라!
     //        -Xmx메모리크기
     //    예) $ java -Xmx20000m ...
+    System.out.println("종료!");
   }
 }
 

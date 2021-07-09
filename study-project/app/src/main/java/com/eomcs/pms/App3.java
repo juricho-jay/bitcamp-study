@@ -53,7 +53,7 @@ public class App3 {
 
     System.out.println("--------------------------------");
 
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size, i++) {
       System.out.printf("프로젝트: %s\n", project);
       System.out.printf("번호: %d\n", no[i]);
       System.out.printf("내용: %s\n", content[i]);

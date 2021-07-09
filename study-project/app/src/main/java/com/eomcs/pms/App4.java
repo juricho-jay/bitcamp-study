@@ -25,7 +25,8 @@ public class App4 {
     for (int i = 0; i < LENGTH; i++) {
       System.out.print("번호? ");
       size++;
-      no[i] = keyScan.nextLine();
+      no[i] = Integer.parseInt();
+
 
     }
 

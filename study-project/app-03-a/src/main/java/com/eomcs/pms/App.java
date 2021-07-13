@@ -8,27 +8,27 @@ import java.util.Scanner;
 //3) 사용자의 명령을 입력 받아 출력
 //4) 명령을 입력 받아 출력하는 것을 무한 반복
 //5) exit나 quit 명령을 입력하면 반복 실행 중지
-//6) /member/add와 /member/list 명령을 구분해 보자!
+//6) /member/add와 member/list 명령을 구분해 보자!
 //7) /member/add 명령 처리
 //8) /member/list 명령 처리
-//9) /project/add  명령 처리
-//10) /project/list 명령 처리
-//11) /task/add 명령 처리
-//12) /task/list 명령 처리
+//9) /project/add 명령 처리
+//10)
+//11)
+//12)
 public class App {
 
   public static void main(String[] args) {
     Scanner keyboardScan = new Scanner(System.in);
 
     // 회원 정보
-    final int LENGTH = 100;
-    int[] no = new int[LENGTH];
-    String[] name = new String[LENGTH];
-    String[] email = new String[LENGTH];
-    String[] password = new String[LENGTH];
-    String[] photo = new String[LENGTH];
-    String[] tel = new String[LENGTH];
-    Date[] registeredDate = new Date[LENGTH];
+    final int MEMBER_LENGTH = 100;
+    int[] no = new int[MEMBER_LENGTH];
+    String[] name = new String[MEMBER_LENGTH];
+    String[] email = new String[MEMBER_LENGTH];
+    String[] password = new String[MEMBER_LENGTH];
+    String[] photo = new String[MEMBER_LENGTH];
+    String[] tel = new String[MEMBER_LENGTH];
+    Date[] registeredDate = new Date[MEMBER_LENGTH];
     int size = 0;
 
     // 프로젝트 정보
@@ -53,9 +53,10 @@ public class App {
 
     while (true) {
       System.out.print("명령> ");
+
       String input = keyboardScan.nextLine();
+
       if (input.equals("exit") || input.equals("quit")) {
-        System.out.println("안녕!");
         break;
       } else if (input.equals("/member/add")) {
         System.out.println("[회원 등록]");
@@ -77,10 +78,9 @@ public class App {
         System.out.print("전화? ");
         tel[size] = keyboardScan.nextLine();
 
-        registeredDate[size] = new Date(System.currentTimeMillis());
+        registeredDate[size] = new java.sql.Date(System.currentTimeMillis());
 
-        size++;
-
+        ++size;
       } else if (input.equals("/member/list")) {
         System.out.println("[회원 목록]");
         for (int i = 0; i < size; i++) {
@@ -89,7 +89,7 @@ public class App {
               no[i], name[i], email[i], tel[i], registeredDate[i]);
         }
 
-      }  else if (input.equals("/project/add")) {
+      } else if (input.equals("/project/add")) {
         System.out.println("[프로젝트 등록]");
 
         System.out.print("번호? ");
@@ -115,17 +115,15 @@ public class App {
 
         pSize++;
 
-      }  else if (input.equals("/project/list")) {
+      } else if (input.equals("/project/list")) {// 번호, 프로젝트명, 시작일, 종료일, 만든이
         System.out.println("[프로젝트 목록]");
-        for (int i = 0; i < pSize; i++) {
-          // 번호, 프로젝트명, 시작일, 종료일, 만든이
+        for (int i = 0; i < size; i++) {
           System.out.printf("%d, %s, %s, %s, %s\n", // 출력 형식 지정
               pNo[i], pTitle[i], pStartDate[i], pEndDate[i], pOwner[i]);
         }
 
-      }  else if (input.equals("/task/add")) {
+      } else if (input.equals("/task/add")) {
         System.out.println("[작업 등록]");
-
         System.out.print("번호? ");
         tNo[tSize] = Integer.parseInt(keyboardScan.nextLine());
 
@@ -145,12 +143,12 @@ public class App {
         System.out.print("담당자? ");
         tOwner[tSize] = keyboardScan.nextLine();
 
-        tSize++;
+        size++;
 
-      }  else if (input.equals("/task/list")) {
-        System.out.println("[작업 목록]");
+      } else if (input.equals("/task/list")) {
+        System.out.println("작업 목록");
 
-        for (int i = 0; i < tSize; i++) {
+        for (int i = 0; i < size; i++) {
           String stateLabel = null;
           switch (tStatus[i]) {
             case 1:
@@ -166,13 +164,12 @@ public class App {
           System.out.printf("%d, %s, %s, %s, %s\n", // 출력 형식 지정
               tNo[i], tContent[i], tDeadline[i], stateLabel, tOwner[i]);
         }
-
       } else {
         System.out.println("실행할 수 없는 명령입니다.");
       }
       System.out.println();
     }
-
     keyboardScan.close();
+
   }
 }

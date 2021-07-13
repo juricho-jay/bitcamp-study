@@ -12,7 +12,7 @@ public class Exam0331 {
     //      라벨: {문장1, 문장2, ...}
 
     myloop:
-      while (x <= 9) {
+      while (x <= 9) {      //while은 한 문장. 아래 while은 while 한 문장 속 다른 while
 
         while (y <= 9) {
           System.out.printf("%d * %d = %d\n", x, y, x * y);

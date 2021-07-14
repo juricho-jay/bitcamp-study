@@ -157,7 +157,9 @@ OTHERS
         - javadoc comments
         - annotations
 - Practice projects (eomcs-java-project-2021)
-    - 01-b: Preparing projects : Import into 'Eclipse IDE'
+    - 01-b: Preparing projects : Import into 'Eclipse IDE
+
+0714 exam 0310!
 
 
 

@@ -9,22 +9,38 @@ package com.eomcs.algorithm.quiz;
 public class Test004 {
 
   public static int divisorsPairs(int[] sequence) {
-
-    int result = 0;
-
+    int pairs = 0;
     for (int i = 0; i < sequence.length; i++) {
-      for (int j = i; j < sequence.length; j++) {
+      for (int j = i + 1; j < sequence.length - 1; j++) {
+        System.out.printf("%d <--> %d\n", sequence[i], sequence[j]);
         if (sequence[i] % sequence[j] == 0 || sequence[j] % sequence[i] == 0) {
-          result++;
+          pairs++;
         }
       }
     }
-
-    return result;
+    return pairs;
   }
 
+
+
+
+
+
+
+  //    int result = 0;
+  //
+  //    for (int i = 0; i < sequence.length; i++) {
+  //      for (int j = i + 1; j < sequence.length; j++) {
+  //        if (sequence[i] % sequence[j] == 0 || sequence[j] % sequence[i] == 0) {
+  //          result++;
+  //        }
+  //      }
+  //    }
+  //
+  //    return result;
+
   public static void main(String[] args) {
-    int[] values = {2, 4, 8};
+    int[] values = {8, 4, 2, 3, 6, 10, 5};
     System.out.println(divisorsPairs(values));
 
   }

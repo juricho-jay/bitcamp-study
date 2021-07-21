@@ -5,8 +5,12 @@ public class Test {
   int b;
 
 
-  void m(int c) {
+  static void m1(int c) {
     int d = c + 100;
+  }
 
+
+  void m2(int c) {
+    int d = c + 100;
   }
 }

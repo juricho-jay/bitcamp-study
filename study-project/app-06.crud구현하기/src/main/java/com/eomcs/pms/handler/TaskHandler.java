@@ -38,10 +38,8 @@ public class TaskHandler {
       System.out.println("등록된 회원이 아닙니다.");
     }
 
-    System.out.println("작업 정보를 등록하였습니다.");
     this.tasks[this.size++] = task;
   }
-
 
   //다른 패키지에 있는 App 클래스가 다음 메서드를 호출할 수 있도록 공개한다.
   public void list() {
@@ -69,81 +67,4 @@ public class TaskHandler {
     }
   }
 
-  public void detail() {
-    System.out.println("[작업 목록 상세보기]");
-
-    int no = Prompt.inputInt("번호? ");
-
-    Task task = null;
-
-    for (int i = 0; i < this.size; i++) {
-      if (tasks[i].no == no) {
-        task = tasks[i];
-        break;
-      }
-      if (task == null) {
-        System.out.println("해당 번호의 작업이 없습니다.");
-        return;
-      }
-    }
-
-    System.out.printf("내용: %s\n", task.content);
-    System.out.printf("마감일: %s\n", task.deadline);
-
-
-    //System.out.printf("상태: %s\n", );
-    System.out.printf("담당자: %s\n", task.owner);
-
-    System.out.println();
-
-
-  }
-
-
-  public void update() {
-    System.out.println("[작업 목록 변경하기]");
-
-    int no = Prompt.inputInt("번호? ");
-
-    Task task = null;
-
-    for (int i = 0; i < this.size; i++) {
-      if (tasks[i].no == no) {
-        task = tasks[i];
-        break;
-      }
-      if (task == null) {
-        System.out.println("해당 번호의 게시글이 없습니다.");
-        return;
-      }
-    }
-
-
-    String content = Prompt.inputString(String.format("내용(%s)", task.content));
-    String status = Prompt.inputString(String.format("상태(%s)", task.status));
-    String owner = Prompt.inputString(String.format("담당자(%s)", task.owner));
-
-    String input = Prompt.inputString("정말 변경하시겠습니까?(y/N) ");
-
-    if (input.equalsIgnoreCase("n") || input.length() == 0) {
-      System.out.println("작업 변경을 취소합니다.");
-      return;
-    }
-
-    if (input.equalsIgnoreCase("y")) {
-      System.out.println("작업을 변경하였습니다.");
-
-      task.content = content;
-      task.status = status;
-      task.owner = owner;
-    }
-
-
-
-  }
-
-
-} 
-
-
-
+}

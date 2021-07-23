@@ -10,9 +10,16 @@ public class App {
 
   public static void main(String[] args) {
 
+    // 각 게시판의 게시글을 담을 메모리(boards 레퍼런스 배열과 size)를 준비한다.
+    // new BoardHandler()
+    //   - BoardHandler가 작업할 때 사용할 변수를 준비한다. 
+    //   - BoardHandler는 게시글을 다루는 작업을 한다.
     BoardHandler boardHandler = new BoardHandler();
+
     MemberHandler memberHandler = new MemberHandler();
+
     ProjectHandler projectHandler = new ProjectHandler();
+
     TaskHandler taskHandler = new TaskHandler();
 
     while (true) {
@@ -26,15 +33,6 @@ public class App {
 
       } else if (input.equals("/member/list")) {
         memberHandler.list();
-
-      } else if (input.equals("/member/detail")) {
-        memberHandler.detail();
-
-      } else if (input.equals("/member/update")) {
-        memberHandler.update();
-
-      } else if (input.equals("/member/delete")) {
-        memberHandler.delete();
 
       }  else if (input.equals("/project/add")) {
         projectHandler.add(memberHandler);

@@ -48,10 +48,9 @@ public class BoardHandler {
     int no = Prompt.inputInt("번호? ");
 
     Board board = null;
-
     for (int i = 0; i < this.size; i++) {
-      if (boards[i].no == no) {
-        board = boards[i];
+      if (this.boards[i].no == no) {
+        board = this.boards[i];
         break;
       }
     }
@@ -60,7 +59,6 @@ public class BoardHandler {
       System.out.println("해당 번호의 게시글이 없습니다.");
       return;
     }
-
     System.out.printf("제목: %s\n", board.title);
     System.out.printf("내용: %s\n", board.content);
     System.out.printf("작성자: %s\n", board.writer);
@@ -73,10 +71,9 @@ public class BoardHandler {
     int no = Prompt.inputInt("번호? ");
 
     Board board = null;
-
     for (int i = 0; i < this.size; i++) {
-      if (boards[i].no == no) {
-        board = boards[i];
+      if (this.boards[i].no == no) {
+        board = this.boards[i];
         break;
       }
     }
@@ -86,15 +83,14 @@ public class BoardHandler {
       return;
     }
 
-    String title = Prompt.inputString(String.format("제목(%s)? ", board.title));
-    String content = Prompt.inputString(String.format("내용(%s)? ", board.content));
+    String title = Prompt.inputString(String.format("제목(%s)?", board.title));
+    String content = Prompt.inputString(String.format("내용(%s)?", board.content));
 
     String input = Prompt.inputString("정말 변경하시겠습니까?(y/N) ");
     if (input.equalsIgnoreCase("n") || input.length() == 0) {
       System.out.println("게시글 변경을 취소하였습니다.");
       return;
     }
-
     board.title = title;
     board.content = content;
     System.out.println("게시글을 변경하였습니다.");
@@ -104,16 +100,16 @@ public class BoardHandler {
     System.out.println("[게시글 삭제]");
     int no = Prompt.inputInt("번호? ");
 
-    int boardIndex = -1;
+    int index = -1;
 
     for (int i = 0; i < this.size; i++) {
-      if (boards[i].no == no) {
-        boardIndex = i;
+      if (this.boards[i].no == no) {
+        index = i;
         break;
       }
     }
 
-    if (boardIndex == -1) {
+    if (index == -1) {
       System.out.println("해당 번호의 게시글이 없습니다.");
       return;
     }
@@ -124,19 +120,20 @@ public class BoardHandler {
       return;
     }
 
-    for (int i = boardIndex + 1; i < this.size; i++) {
+    for (int i = index + 1;  i < this.size; i++) {
       this.boards[i - 1] = this.boards[i];
-    }
-    this.boards[--this.size] = null; 
-
-    System.out.println("게시글을 삭제하였습니다.");
+    }     
+    this.boards[--this.size] = null;
+    System.out.println("게시글이 삭제되었습니다.");
 
   }
 
 
+
+
+
+
 }
-
-
 
 
 

@@ -33,7 +33,7 @@ public class Exam0970 {
     }
 
     void display() {
-
+      //      this(); // 일반 메서드에서는 생성자를 호출할 수 없다.
       System.out.println("----------------------------------");
       System.out.printf("밝기(%d)\n", this.bright);
       System.out.printf("명암(%d)\n", this.contrast);
@@ -58,9 +58,9 @@ public class Exam0970 {
     m2.display();
     m3.display();
 
-
-    //주의!!
-    // 임의로 생성자를 
+    // 주의!
+    // 임의로 생성자를 호출할 수 없다.
+    //    m1.Monitor(); // 컴파일 오류!
   }
 }
 

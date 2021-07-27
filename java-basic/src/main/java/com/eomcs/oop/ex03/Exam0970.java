@@ -33,6 +33,7 @@ public class Exam0970 {
     }
 
     void display() {
+
       System.out.println("----------------------------------");
       System.out.printf("밝기(%d)\n", this.bright);
       System.out.printf("명암(%d)\n", this.contrast);
@@ -56,6 +57,10 @@ public class Exam0970 {
     m1.display();
     m2.display();
     m3.display();
+
+
+    //주의!!
+    // 임의로 생성자를 
   }
 }
 

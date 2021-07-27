@@ -2,8 +2,7 @@ package com.eomcs.oop.ex00;
 
 public class Exam0200 {
   public static void main(String[] args) {
-    //인스턴스 변수 테스트
-
+    // 인스턴스 변수 테스트
 
     // 인스턴스 변수
     // => new 명령을 실행해서 만든다.
@@ -20,13 +19,18 @@ public class Exam0200 {
     test1(t2);
 
     System.out.println(t2.b);
-
-
   }
-
-
 
   static void test1(Test p) {
     p.b = 3000;
   }
-}  
+
+}
+
+
+
+
+
+
+
+

@@ -56,10 +56,6 @@ public class Exam0130 {
     // 훨씬 소스 코드의 목적을 이해하는데 직관적이다.
     s.calculate(); // 변수 뒤에 연산자를 놓는 i++ 의 예와 비슷하다.
 
-    //s라는 인스턴스에 대해서 calculate 실행
-
-
-
     System.out.printf("%s, %d, %d, %d, %d, %.1f\n", s.name, s.kor, s.eng, s.math, s.sum, s.average);
   }
 }

@@ -40,6 +40,7 @@ public class Exam0740 {
       b = 200;
       c = 300;
     }
+
   }
 
   public static void main(String[] args) {

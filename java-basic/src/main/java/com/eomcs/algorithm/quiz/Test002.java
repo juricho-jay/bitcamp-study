@@ -17,10 +17,10 @@ public class Test002 {
         answer = Math.abs(values[i] - values[i-1]);
       }
     }
-    
+
     return answer;
   }
-  
+
   public static void main(String[] args) {
     System.out.println(maxDiff(new int[]{2, 4, 1, 0}));
 

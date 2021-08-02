@@ -42,8 +42,14 @@ public class MenuGroup extends Menu {
   }
 
   // 배열에 들어 있는 Menu 객체를 찾는다.
-  public Menu getMenu(String title) {
+  public Menu getMenu(Menu child) {
     // 완성하시오!
+    for (int i = 0; i < this.size; i++) {
+      if (childs[i].equals(child)) {
+        return child;
+      }
+
+    }
     return null;
   }
 

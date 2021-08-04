@@ -42,6 +42,16 @@ public class TaskHandler {
       System.out.println("작업 등록을 취소합니다.");
       return; 
     }
+    if (size == tasks.length) {
+      Task[] arr = new Task[tasks.length + (tasks.length >> 2)];
+      for (int i = 0; i < size; i++) {
+        arr[i] = tasks[i];
+      }
+
+      tasks = arr;
+      System.out.println("새 Task[] 객체를 만듦!");
+    } 
+
 
     this.tasks[this.size++] = task;
   }

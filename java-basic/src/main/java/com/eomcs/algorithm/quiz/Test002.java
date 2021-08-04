@@ -12,9 +12,9 @@ public class Test002 {
 
   static int maxDiff(int[] values) {
     int answer = 1;
-    for (int i = 1; i < values.length; i++) {
-      if ((values[i] - values[i - 1]) > answer) {
-        answer = Math.abs(values[i] - values[i-1]);
+    for (int i = 0; i < values.length-1; i++) {
+      if ((values[i+1] - values[i]) > answer) {
+        answer = Math.abs(values[i+1] - values[i]);
       }
     }
 

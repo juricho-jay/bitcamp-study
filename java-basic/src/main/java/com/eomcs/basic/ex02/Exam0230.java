@@ -54,13 +54,14 @@ public class Exam0230 {
 
     // 따라서 이렇게 생성된 wrapper 객체의 값을 비교할 때는
     // String 처럼 equals()로 비교하라!
-    System.out.println(obj7.equals(obj8));
+    System.out.println(obj7.equals(obj8)); //true
 
     // 결론!
     // - wrapper 객체의 값을 비교할 때 == 연산자를 사용하지 말라!
     // - -128 ~ 127 범위 내의 값이라면 == 연산자를 사용하여 비교할 수도 있지만,
     //   매번 비교할 때 마다 범위의 유효성을 생각하는 것이 번거롭다.
     // - 그냥 equals() 메서드를 사용하여 값을 비교하라!
+    // - 더 좋은 방법은 auto-unboxing하여 primitive type의 값으로 바꾼 후에 == 연산자로 비교하라!
   }
 }
 

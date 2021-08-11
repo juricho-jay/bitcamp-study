@@ -6,7 +6,7 @@ public class Exam0160 {
     // String 객체는 immutable 객체이다.
     // 즉 한 번 객체에 값을 담으면 변경할 수 없다.
 
-    String s1 = new String("Hello");
+    String s1 = new String("Hello"); // immutable 객체
 
     // String 클래스의 메서드는 원본 인스턴스의 데이터를 변경하지 않는다. 
     // 다만 새로 String 객체를 만들 뿐이다.

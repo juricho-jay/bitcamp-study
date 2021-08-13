@@ -29,8 +29,7 @@ interface MyInterface {
 }
 
 // 2) 인터페이스 구현
-//앞에 abstract 빼면 에러뜸 > 인터페이스의 모든 메서드를 구현한 것이 아니기 때문에 추상 클래스가됨
-abstract class MyInterfaceImpl implements MyInterface { 
+abstract class MyInterfaceImpl implements MyInterface {
   @Override
   public void m1() {}
 

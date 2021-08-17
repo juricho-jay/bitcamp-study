@@ -1,4 +1,4 @@
-// anonymous class : 로컬 클래스 vs 익명 클래스
+// anonymous class : 인터페이스를 구현한 익명 클래스 정의하기
 package com.eomcs.oop.ex11.e;
 
 public class Exam0120 {

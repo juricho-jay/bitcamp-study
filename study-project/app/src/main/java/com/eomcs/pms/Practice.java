@@ -2,13 +2,13 @@ package com.eomcs.pms;
 
 public class Practice {
   public static void main(String[] args) {
-    Solution sol = new Solution();
+    Solution2 sol = new Solution2();
     long answer = sol.solution(3, 10, 4);
     System.out.println(answer);
   }
 }
 
-class Solution {
+class Solution2 {
   public long solution(long price, long money, long count) {
     long total = 0;
     for (long i = 0;  i < count; i++) {

@@ -66,11 +66,12 @@ public class Exam0130 {
     // - hashCode()의 리턴 값이 같을 필요는 없다.
     //
     Member m4 = new Member("임꺽정", 30);
-    System.out.println(list.contains(m4)); // true
+    System.out.println(list.contains(m4)); // true 포함하고 있냐 값은 값을 가진 객체가 있냐
+    //m4가 있냐가 아니라 같은 값을 가진 객체가 있냐는 의미
 
     System.out.println(m2 == m4);
-    System.out.println(m2.equals(m4));
-    System.out.println(m2.hashCode() == m4.hashCode());
+    System.out.println(m2.equals(m4)); //위에서 그렇게 짬 - 주소는 다르더라도 값이 다르면
+    System.out.println(m2.hashCode() == m4.hashCode()); //해시코드는 당연히 다름
 
   }
 }

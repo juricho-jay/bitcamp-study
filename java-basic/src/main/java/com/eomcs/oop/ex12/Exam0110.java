@@ -13,17 +13,16 @@ public class Exam0110 {
   public static void main(String[] args) {
 
     // 익명 클래스로 인터페이스 구현하기
-    Player p1 = new Player() {
+    Player p1 = new Player() { //수퍼 클래스 object
       @Override
-      public void play() {
+      public void play() { 
         System.out.println("익명 클래스");
       }
     };
-    p1.play();
+    p1.play(); //구현체를 play
 
     // 람다 문법으로 인터페이스 구현하기
-    // => 메서드 한 개짜리 인터페이스를 구현한 익명 클래스를 
-    //    좀 더 간단히 표현하기 위해 만든 문법이다.
+    // => 메서드 한 개짜리 인터페이스를 좀 더 간결하게 구현하기 위해 만든 문법이다.
     // => 뻔한 코드 생략!
     Player p2 = () -> {
       System.out.println("람다");
@@ -51,6 +50,7 @@ public class Exam0110 {
 //  Line numbers:
 //    [pc: 0, line: 27]
 //    [pc: 8, line: 28]
+//
 //
 // => 람다를 호출하는 코드는 자동 생성된 메서드를 호출하는 코드로 변환된다.
 //

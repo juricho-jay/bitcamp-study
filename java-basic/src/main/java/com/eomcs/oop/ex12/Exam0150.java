@@ -3,7 +3,7 @@ package com.eomcs.oop.ex12;
 
 public class Exam0150 {
 
-  interface Calculator {
+  interface Calculator { // 메소드 한 개짜리 > functional interface
     int compute(int a, int b);
   }
 

@@ -65,6 +65,10 @@ public class Exam0242 {
         System.out.printf("이름: %s, 나이: %d\n", m.name, m.age);
       }
     });
+
+
+    //람다 > 메서드 한 개 인터페이스에서만 적용
+
   }
 }
 

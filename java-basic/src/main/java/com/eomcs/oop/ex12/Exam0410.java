@@ -6,8 +6,11 @@ public class Exam0410 {
   static interface Interest {
     double compute(int money);
   }
+  // 팩토리 메서드
+  // => Interest 구현체를 생성하여 리턴하는 메서드
 
-  static Interest getInterest(final double rate) {
+  static Interest getInterest(final double rate) { 
+    //중첩클래스의 이점: 로컬 변수와 생성자 자동으로 생성
     // 로컬 클래스로 인터페이스 구현한 후 객체 리턴하기
     class InterestImpl implements Interest {
       double rate;

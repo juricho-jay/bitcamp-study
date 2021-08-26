@@ -16,6 +16,7 @@ public class Exam0210 {
 
     // - HashMap에서 key 목록을 꺼내기
     java.util.Set<String> keys = map.keySet(); // key 객체들이 들어있는 집합(컬렉션)을 리턴한다.
+    // 리스트 타입이 아니라 Set타입 - key는 절대 중복되지 않아
 
     // key가 들어있는 Set에서 값을 꺼내는 방법
     // 1) Iterator 사용

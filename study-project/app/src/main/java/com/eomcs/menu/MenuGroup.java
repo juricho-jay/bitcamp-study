@@ -7,6 +7,7 @@ import com.eomcs.pms.handler.AuthLoginHandler;
 import com.eomcs.util.Prompt;
 
 // 역할
+// 역할
 // - 다른 메뉴를 포함하는 컨테이너 역할을 수행한다.
 // 
 public class MenuGroup extends Menu {

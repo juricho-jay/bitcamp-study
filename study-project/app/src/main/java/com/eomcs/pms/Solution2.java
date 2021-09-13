@@ -9,6 +9,7 @@ public class Solution2 {
     int inputB = b;
     String answer = null;
 
+    //안녕안녕안녕
     LocalDate date = LocalDate.of(2016, inputA, inputB);
 
     DayOfWeek dayOfWeek = date.getDayOfWeek();

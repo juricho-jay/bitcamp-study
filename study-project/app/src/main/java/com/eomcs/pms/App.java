@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import com.eomcs.context.ApplicationContextListener;
 import com.eomcs.menu.Menu;
 import com.eomcs.menu.MenuGroup;
 import com.eomcs.pms.domain.Board;
@@ -22,6 +23,7 @@ import com.eomcs.pms.handler.BoardListHandler;
 import com.eomcs.pms.handler.BoardSearchHandler;
 import com.eomcs.pms.handler.BoardUpdateHandler;
 import com.eomcs.pms.handler.Command;
+import com.eomcs.pms.handler.CommandRequest;
 import com.eomcs.pms.handler.MemberAddHandler;
 import com.eomcs.pms.handler.MemberDeleteHandler;
 import com.eomcs.pms.handler.MemberDetailHandler;
@@ -39,10 +41,13 @@ import com.eomcs.pms.handler.TaskDeleteHandler;
 import com.eomcs.pms.handler.TaskDetailHandler;
 import com.eomcs.pms.handler.TaskListHandler;
 import com.eomcs.pms.handler.TaskUpdateHandler;
+import com.eomcs.pms.listener.AppInitListener;
+import com.eomcs.pms.listener.FileListener;
 import com.eomcs.util.Prompt;
 
 
 public class App {
+
   List<Board> boardList = new ArrayList<>();
   List<Member> memberList = new LinkedList<>();
   List<Project> projectList = new ArrayList<>();
@@ -52,53 +57,65 @@ public class App {
   MemberPrompt memberPrompt = new MemberPrompt(memberList);
   ProjectPrompt projectPrompt = new ProjectPrompt(projectList);
 
-  // Menu 추상 클래스를 상속 받아서 PMS 시스템에 맞게 기능을 추가한다.
+  // 옵저버 관련 필드와 메서드
+  // => 옵저버(리스너) 목록
+  List<ApplicationContextListener> listeners = new ArrayList<>();
+
+  // => 옵저버(리스너)를 등록하는 메서드
+  public void addApplicationContextListener(ApplicationContextListener listener) {
+    this.listeners.add(listener);
+  }
+
+  // => 옵저버(리스너)를 제거하는 메서드
+  public void removeApplicationContextListener(ApplicationContextListener listener) {
+    this.listeners.remove(listener);
+  }
+
   class MenuItem extends Menu {
-
-    // inner 클래스는 컴파일할 때 바깥 클래스의 인스턴스를 저장할 필드가 자동 생성된다.
-    // 개발자가 따로 선언할 필요가 없다.
-    // 예) App this$0;
-
-    // 1) 메뉴의 ID를 저장할 필드를 선언한다.
-    // - 이 메뉴 아이디는 커맨드 객체를 찾을 때 사용할 것이다.
     String menuId;
 
-    // inner 클래스의 생성자를 컴파일 할 때 
-    // 바깥 클래스의 인스턴스를 받는 파라미터가 자동으로 추가된다.
-    // 개발자가 따로 파라미터를 추가할 필요가 없다.
-    public MenuItem(/*App outer,*/ String title, String menuId) {
-      super(/*outer,*/ title);// 다른 생성자와 코드가 중복 된다면 다른 생성자를 호출하라.
+    public MenuItem(String title, String menuId) {
+      super(title);
       this.menuId = menuId;
     }
 
-    public MenuItem(/*App outer,*/String title, int accessScope, String menuId) {
+    public MenuItem(String title, int accessScope, String menuId) {
       super(title, accessScope);
       this.menuId = menuId;
-      //this$0 = outer;
     }
 
     @Override
     public void execute() {
-      // inner 클래스는 바깥 클래스의 인스턴스를 내부 필드로 갖고 있기 때문에
-      // inner 클래스의 멤버를 마음대로 사용할 수 있다.
-
-      // 메뉴가 실행될 때 메뉴 아이디를 사용하여 Map에서 Command 객체를 찾아 실행한다.
       Command command = commandMap.get(menuId);
-      command.execute();
+      try {
+        command.execute(new CommandRequest(commandMap));
+      } catch (Exception e) {
+        System.out.printf("%s 명령을 실행하는 중 오류 발생!\n", menuId);
+        e.printStackTrace();
+      }
     }
   }
 
   public static void main(String[] args) {
     App app = new App(); 
+
+    // 애플리케이션을 본격적으로 실행하기 전에 옵저버를 등록한다.
+    // => 이렇게 등록된 옵저버는 service()가 호출되거나/종료될 때 그 상태를 보고 받을 것이다.
+    // => 옵저버의 기능을 제거하고 싶다면, 언제든 등록하지 않으면 된다.
+    //    즉 기능을 추가하거나 빼기 쉽다.
+    app.addApplicationContextListener(new AppInitListener());
+    app.addApplicationContextListener(new FileListener());
+
     app.service();
   }
 
   public App() {
+
     commandMap.put("/board/add", new BoardAddHandler(boardList));
     commandMap.put("/board/list", new BoardListHandler(boardList));
-    commandMap.put("/board/detail", new BoardDetailHandler(boardList));
     commandMap.put("/board/update", new BoardUpdateHandler(boardList));
     commandMap.put("/board/delete", new BoardDeleteHandler(boardList));
+    commandMap.put("/board/detail", new BoardDetailHandler(boardList));
     commandMap.put("/board/search", new BoardSearchHandler(boardList));
 
     commandMap.put("/member/add", new MemberAddHandler(memberList));
@@ -124,18 +141,46 @@ public class App {
     commandMap.put("/auth/userinfo", new AuthUserInfoHandler());
   }
 
+  private void notifyOnApplicationStarted() {
+    HashMap<String,Object> params = new HashMap<>();
+    params.put("boardList", boardList);
+    params.put("memberList", memberList);
+    params.put("projectList", projectList);
+
+    for (ApplicationContextListener listener : listeners) {
+      listener.contextInitialized(params);
+    }
+  }
+
+  private void notifyOnApplicationEnded() {
+    HashMap<String,Object> params = new HashMap<>();
+    params.put("boardList", boardList);
+    params.put("memberList", memberList);
+    params.put("projectList", projectList);
+
+    for (ApplicationContextListener listener : listeners) {
+      listener.contextDestroyed(params);
+    }
+  }
+
   void service() {
+
+    notifyOnApplicationStarted();
+
     createMainMenu().execute();
     Prompt.close();
+
+    notifyOnApplicationEnded();
   }
+
 
   Menu createMainMenu() {
     MenuGroup mainMenuGroup = new MenuGroup("메인");
     mainMenuGroup.setPrevMenuTitle("종료");
 
-    mainMenuGroup.add(new MenuItem("로그인", ACCESS_LOGOUT, "/auth/login"));
-    mainMenuGroup.add(new MenuItem("내정보", ACCESS_GENERAL | ACCESS_ADMIN, "/auth/userinfo"));
-    mainMenuGroup.add(new MenuItem("로그아웃", ACCESS_GENERAL | ACCESS_ADMIN, "/auth/logout"));
+    mainMenuGroup.add(new MenuItem("로그인", ACCESS_LOGOUT , "/auth/login"));
+    mainMenuGroup.add(new MenuItem("내정보", ACCESS_GENERAL, "/auth/userinfo"));
+    mainMenuGroup.add(new MenuItem("로그아웃", ACCESS_GENERAL, "/auth/logout"));
 
     mainMenuGroup.add(createBoardMenu());
     mainMenuGroup.add(createMemberMenu());
@@ -151,8 +196,8 @@ public class App {
     boardMenu.add(new MenuItem("등록", ACCESS_GENERAL, "/board/add"));
     boardMenu.add(new MenuItem("목록", "/board/list"));
     boardMenu.add(new MenuItem("상세보기", "/board/detail"));
-    boardMenu.add(new MenuItem("변경", ACCESS_GENERAL, "/board/update"));
-    boardMenu.add(new MenuItem("삭제", ACCESS_GENERAL, "/board/delete"));
+    //    boardMenu.add(new MenuItem("변경", ACCESS_GENERAL, "/board/update"));
+    //    boardMenu.add(new MenuItem("삭제", ACCESS_GENERAL, "/board/delete"));
     boardMenu.add(new MenuItem("검색", "/board/search"));
     return boardMenu;
   }
@@ -162,8 +207,8 @@ public class App {
     memberMenu.add(new MenuItem("등록", ACCESS_GENERAL, "/member/add"));
     memberMenu.add(new MenuItem("목록", "/member/list"));
     memberMenu.add(new MenuItem("상세보기", "/member/detail"));
-    memberMenu.add(new MenuItem("변경", ACCESS_GENERAL, "/member/update"));
-    memberMenu.add(new MenuItem("삭제", ACCESS_GENERAL, "/member/delete"));
+    //    memberMenu.add(new MenuItem("변경", ACCESS_GENERAL, "/member/update"));
+    //    memberMenu.add(new MenuItem("삭제", ACCESS_GENERAL, "/member/delete"));
     return memberMenu;
   }
 
@@ -172,8 +217,8 @@ public class App {
     projectMenu.add(new MenuItem("등록", ACCESS_GENERAL, "/project/add"));
     projectMenu.add(new MenuItem("목록", "/project/list"));
     projectMenu.add(new MenuItem("상세보기", "/project/detail"));
-    projectMenu.add(new MenuItem("변경", ACCESS_GENERAL, "/project/update"));
-    projectMenu.add(new MenuItem("삭제", ACCESS_GENERAL, "/project/delete"));
+    //    projectMenu.add(new MenuItem("변경", ACCESS_GENERAL, "/project/update"));
+    //    projectMenu.add(new MenuItem("삭제", ACCESS_GENERAL, "/project/delete"));
     return projectMenu;
   }
 
@@ -182,8 +227,8 @@ public class App {
     taskMenu.add(new MenuItem("등록", ACCESS_GENERAL, "/task/add"));
     taskMenu.add(new MenuItem("목록", "/task/list"));
     taskMenu.add(new MenuItem("상세보기", "/task/detail"));
-    taskMenu.add(new MenuItem("변경", ACCESS_GENERAL, "/task/update"));
-    taskMenu.add(new MenuItem("삭제", ACCESS_GENERAL, "/task/delete"));
+    //    taskMenu.add(new MenuItem("변경", ACCESS_GENERAL, "/task/update"));
+    //    taskMenu.add(new MenuItem("삭제", ACCESS_GENERAL, "/task/delete"));
     return taskMenu;
   }
 
@@ -192,7 +237,7 @@ public class App {
     adminMenu.add(new MenuItem("회원 등록", "/member/add"));
     adminMenu.add(new MenuItem("프로젝트 등록", "/project/add"));
     adminMenu.add(new MenuItem("작업 등록", "/task/add"));
-    adminMenu.add(new MenuItem("삭제", "/board/add"));
+    adminMenu.add(new MenuItem("게시글 등록", "/board/add"));
     return adminMenu;
   }
 }

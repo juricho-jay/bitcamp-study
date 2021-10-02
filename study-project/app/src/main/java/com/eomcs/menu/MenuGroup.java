@@ -7,7 +7,6 @@ import com.eomcs.pms.handler.AuthLoginHandler;
 import com.eomcs.util.Prompt;
 
 // 역할
-// 역할
 // - 다른 메뉴를 포함하는 컨테이너 역할을 수행한다.
 // 
 public class MenuGroup extends Menu {
@@ -32,21 +31,16 @@ public class MenuGroup extends Menu {
   }
   static PrevMenu prevMenu = new PrevMenu();
 
-  // 생성자를 정의하지 않으면 컴파일러가 기본 생성자를 자동으로 추가해 준다.
-  // 문제는 컴파일러가 추가한 기본 생성자는 수퍼 클래스의 기본 생성자를 호출하기 때문에
-  // 컴파일 오류가 발생한다. 
-  // Menu 클래스에는 기본 생성자가 없다. 
-  // 따라서 개발자가 직접 생성자를 정의해야 한다.
   public MenuGroup(String title) {
-    super(title); //기본이 모두 접근 가능한 화면
+    super(title);
   }
 
   public MenuGroup(String title, int accessScope) {
-    super(title, accessScope); // 그 범위에 대해서만 접근 가능
+    super(title, accessScope);
   }
 
   public MenuGroup(String title, boolean disablePrevMenu) {
-    super(title); // 모두 접근 가능
+    super(title);
     this.disablePrevMenu = disablePrevMenu;
   }
 
@@ -61,12 +55,12 @@ public class MenuGroup extends Menu {
 
   // MenuGroup이 포함하는 하위 Menu를 다룰 수 있도록 메서드를 정의한다.
   public void add(Menu child) {
-    childs.add(child);
+    childs.add(child); 
   }
 
   // 배열에 들어 있는 Menu 객체를 찾아 제거한다.
   public Menu remove(Menu child) {
-    if (childs.remove(child))
+    if (childs.remove(child)) 
       return child;
     return null;
   }
@@ -128,12 +122,11 @@ public class MenuGroup extends Menu {
   private List<Menu> getMenuList() {
     ArrayList<Menu> menuList = new ArrayList<>();
     for (Menu menu : childs) {
-      if ((menu.accessScope & AuthLoginHandler.getUserAccessLevel()) > 0) {
-        // 사용자가 해당 메뉴에 접근할 수 있는지 검사한다.
-        //  예) 메뉴의 접근 범위: 0100  = 관리자만 접근 가능
-        //      사용자의 접근 수준: 0101 = 관리자 및 일반 메뉴 접근 가능 
-
-        menuList.add(menu); // 사용자의 접근 레벨 메뉴 권한! 
+      // 사용자가 해당 메뉴에 접근 할 수 있는지 검사한다.
+      //    예) 메뉴의 접근 범위:   0100  = 관리자만 접근 가능   
+      //        사용자의 접근 수준: 0110  = 관리자 및 일반 메뉴 접근 가능
+      if ((menu.accessScope & AuthLoginHandler.getUserAccessLevel()) > 0 ) {
+        menuList.add(menu);
       } 
     }
     return menuList;

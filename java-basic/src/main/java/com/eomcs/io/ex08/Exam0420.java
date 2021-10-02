@@ -24,7 +24,7 @@ public class Exam0420 {
     //   - 즉 DataInputStream은 InputStream 객체에만 연결할 수 있다.
     //   - BufferedInputStream은 InputStream 의 자식이 아니기 때문에
     //     DataInputStream에 연결할 수 없다.
-    DataInputStream in3 = new DataInputStream(in2); // 컴파일 오류!
+//    DataInputStream in3 = new DataInputStream(in2); // 컴파일 오류!
 
     // 만약 위의 코드처럼 DataInputStream을 BufferedInputStream에 연결할 수 있다면,
     // 회원 정보를 읽을 때 버퍼를 사용하기 때문에 속도가 빠를텐데...

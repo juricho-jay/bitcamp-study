@@ -8,7 +8,9 @@ public class Exam0120 {
   public static void main(String[] args) throws Exception {
     FileInputStream in = new FileInputStream("temp/jls11.pdf");
 
-    byte[] buf = new byte[8192]; // 보통 8KB 정도 메모리를 준비한다.
+    byte[] buf = new byte[8192]; // 보통 8KB 정도 메모리를 준비한다. 
+    // 왜 40000000 이런 식으로 안하나? > 여러명이 접속하는 서버를 만드는 것이기 때문에
+
     int len = 0;
 
     long startTime = System.currentTimeMillis(); // 밀리초

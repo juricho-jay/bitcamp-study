@@ -13,15 +13,17 @@ public class Exam0320 {
     byte[] buf = new byte[8192]; // 보통 8KB 정도 메모리를 준비한다.
     int len = 0;
 
+    int count = 0;
     long startTime = System.currentTimeMillis(); // 밀리초
 
-    while ((len = in.read(buf)) != -1)
+    while ((len = in.read(buf)) != -1) {
       out.write(buf, 0, len);
-
+      count++;
+    }
     long endTime = System.currentTimeMillis();
 
     System.out.println(endTime - startTime);
-
+    System.out.println(count);
     in.close();
     out.close();
   }

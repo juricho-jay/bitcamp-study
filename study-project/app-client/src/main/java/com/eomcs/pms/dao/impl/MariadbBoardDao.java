@@ -1,5 +1,7 @@
 package com.eomcs.pms.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,18 +10,21 @@ import com.eomcs.pms.domain.Board;
 import com.eomcs.request.RequestAgent;
 
 // 역할
-// - 게시글 데이터를 컬렉션 객체를 이용하여 관리한다.
+// - 게시글을 DBMS 서버를 통해 관리한다.
 //
-public class NetBoardDao implements BoardDao {
+public class MariadbBoardDao implements BoardDao {
 
-  RequestAgent requestAgent;
+  Connection con;
 
-  public NetBoardDao(RequestAgent requestAgent) {
-    this.requestAgent = requestAgent;
+  public MariadbBoardDao(Connection con) {
+    this.con = con;
   }
 
   @Override
   public void insert(Board board) throws Exception {
+    try (PreparedStatement stmt = con.prepareStatement("")) {
+
+    }
     requestAgent.request("board.insert", board);
     if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
       throw new Exception("게시글 데이터 저장 실패!");
@@ -28,22 +33,20 @@ public class NetBoardDao implements BoardDao {
 
   @Override
   public List<Board> findAll() throws Exception {
-
     requestAgent.request("board.selectList", null);
     if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
-      throw new Exception("게시글 목록조회 실패!");
+      throw new Exception("게시글 목록 조회 실패!");
     }
 
-    return new ArrayList<Board>(requestAgent.getObjects(Board.class));
+    return new ArrayList<>(requestAgent.getObjects(Board.class));
   }
-
 
   @Override
   public List<Board> findByKeyword(String keyword) throws Exception {
     HashMap<String,String> params = new HashMap<>();
     params.put("keyword", keyword);
+    requestAgent.request("board.selectListByKeyword", params);
 
-    requestAgent.request("board.selectListByKeyword", null);
     if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
       throw new Exception("게시글 검색 실패!");
     }
@@ -59,10 +62,10 @@ public class NetBoardDao implements BoardDao {
     requestAgent.request("board.selectOne", params);
 
     if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
-      throw new Exception("게시글 검색 실패!");
+      return null;
     }
 
-    return null;
+    return requestAgent.getObject(Board.class);
   }
 
   @Override
@@ -80,12 +83,12 @@ public class NetBoardDao implements BoardDao {
     params.put("no", String.valueOf(no));
 
     requestAgent.request("board.delete", params);
+
     if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
       throw new Exception("게시글 삭제 실패!");
-    } 
+    }
   }
-
-
-
-
 }
+
+
+

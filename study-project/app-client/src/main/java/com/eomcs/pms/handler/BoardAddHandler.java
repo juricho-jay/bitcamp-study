@@ -28,7 +28,6 @@ public class BoardAddHandler implements Command {
 
     boardDao.insert(board);
 
-
     System.out.println("게시글을 저장했습니다.");
   }
 }

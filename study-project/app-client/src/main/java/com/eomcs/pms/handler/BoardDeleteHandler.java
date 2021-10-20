@@ -1,6 +1,5 @@
 package com.eomcs.pms.handler;
 
-import java.util.HashMap;
 import com.eomcs.pms.dao.BoardDao;
 import com.eomcs.pms.domain.Board;
 import com.eomcs.util.Prompt;
@@ -18,16 +17,12 @@ public class BoardDeleteHandler implements Command {
     System.out.println("[게시글 삭제]");
     int no = (int) request.getAttribute("no");
 
-    HashMap<String,String> params = new HashMap<>();
-    params.put("no", String.valueOf(no));
-
     Board board = boardDao.findByNo(no);
 
     if (board == null) {
       System.out.println("해당 번호의 게시글이 없습니다.");
       return;
     }
-
 
     if (board.getWriter().getNo() != AuthLoginHandler.getLoginUser().getNo()) {
       System.out.println("삭제 권한이 없습니다.");

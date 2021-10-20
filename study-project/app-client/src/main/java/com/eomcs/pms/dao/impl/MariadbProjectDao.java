@@ -9,7 +9,6 @@ import java.util.List;
 import com.eomcs.pms.dao.ProjectDao;
 import com.eomcs.pms.domain.Member;
 import com.eomcs.pms.domain.Project;
-import com.eomcs.pms.domain.Task;
 
 // 역할
 // - 프로젝트 데이터를 DBMS 서버를 통해 관리한다.
@@ -263,17 +262,15 @@ public class MariadbProjectDao implements ProjectDao {
         throw new Exception("프로젝트 데이터 변경 실패!");
       }
 
-      //프로젝트 멤버 변경
+      // 프로젝트 멤버 변경
       // => 기존 멤버 모두 제거
-      try(PreparedStatement stmt2 = con.prepareStatement(
+      try (PreparedStatement stmt2 = con.prepareStatement(
           "delete from pms_project_member where project_no=?")) {
         stmt2.setInt(1, project.getNo());
         stmt2.executeUpdate();
       }
 
-
-
-      // 프로젝트 새 멤버를 입력
+      // => 프로젝트 새 멤버 입력
       try (PreparedStatement stmt2 = con.prepareStatement(
           "insert into pms_project_member(project_no,member_no) values(?,?)")) {
         for (Member member : project.getMembers()) {
@@ -292,7 +289,7 @@ public class MariadbProjectDao implements ProjectDao {
         PreparedStatement stmt2 = con.prepareStatement(
             "delete from pms_project_member where project_no=?")) {
 
-      // 프로젝트 멤버를 먼저 삭제한다
+      // 프로젝트 멤버를 먼제 삭제한다.
       stmt2.setInt(1, no);
       stmt2.executeUpdate();
 
@@ -303,22 +300,6 @@ public class MariadbProjectDao implements ProjectDao {
       }
     }
   }
-
-  @Override
-  public void insertTask(Task task) throws Exception {
-
-  }
-
-  @Override
-  public void deleteTask(int projectNo, int taskNo) throws Exception {
-
-  }
-
-  @Override
-  public void updateTask(Task task) throws Exception {
-
-  }
-
 }
 
 

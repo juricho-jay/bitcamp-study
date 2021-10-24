@@ -25,6 +25,7 @@ public class BoardDetailHandler implements Command {
       return;
     }
 
+
     System.out.printf("제목: %s\n", board.getTitle());
     System.out.printf("내용: %s\n", board.getContent());
     System.out.printf("작성자: %s\n", board.getWriter().getName());

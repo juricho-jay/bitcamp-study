@@ -13,9 +13,8 @@ import org.apache.ibatis.session.SqlSession;
 import com.eomcs.pms.dao.MemberDao;
 import com.eomcs.pms.domain.Member;
 
-
-@WebServlet("/member/add")
-public class MemberAddHandler extends HttpServlet {
+@WebServlet("/member/update")
+public class MemberUpdateHandler extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   SqlSession sqlSession;
@@ -37,25 +36,34 @@ public class MemberAddHandler extends HttpServlet {
 
     out.println("<html>");
     out.println("<head>");
-    out.println("  <title>회원등록</title>");
+    out.println("  <title>회원변경</title>");
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>회원등록결과</h1>");
-
-    Member member = new Member();
-
-    member.setName(request.getParameter("name"));
-    member.setEmail(request.getParameter("email"));
-    member.setPassword(request.getParameter("password"));
-    member.setPhoto(request.getParameter("photo"));
-    member.setTel(request.getParameter("tel"));
+    out.println("<h1>회원변경결과</h1>");
 
     try {
-      memberDao.insert(member);
-      sqlSession.commit();
+      int no = Integer.parseInt(request.getParameter("no"));
 
-      out.println("회원을 등록했습니다.");
-      out.println("<a href='list'>[목록]</a>");
+      Member member = memberDao.findByNo(no);
+
+      if (member == null) {
+        out.println("해당 번호의 회원이 없습니다.<br>");
+
+      } else {
+
+        member.setName(request.getParameter("name"));
+        member.setEmail(request.getParameter("email"));
+        member.setPassword(request.getParameter("password"));
+        member.setPhoto(request.getParameter("photo"));
+        member.setTel(request.getParameter("tel"));
+
+        memberDao.update(member);
+        sqlSession.commit();
+
+        out.println("회원을 변경하였습니다.<br>");
+
+        out.println("<a href='list'>[목록]</a><br>");
+      }
 
     } catch (Exception e) {
       throw new ServletException(e);

@@ -1,7 +1,7 @@
 package com.eomcs.pms.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -13,8 +13,9 @@ import org.apache.ibatis.session.SqlSession;
 import com.eomcs.pms.dao.MemberDao;
 import com.eomcs.pms.domain.Member;
 
-@WebServlet("/member/delete")
-public class MemberDeleteHandler extends HttpServlet {
+
+@WebServlet("/member/add")
+public class MemberAddController extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   SqlSession sqlSession;
@@ -31,41 +32,28 @@ public class MemberDeleteHandler extends HttpServlet {
   protected void service(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    response.setContentType("text/html;charset=UTF-8");
-    PrintWriter out = response.getWriter();
+    Member member = new Member();
 
-    out.println("<html>");
-    out.println("<head>");
-    out.println("  <title>회원삭제</title>");
-    out.println("</head>");
-    out.println("<body>");
-    out.println("<h1>회원삭제결과</h1>");
-
+    member.setName(request.getParameter("name"));
+    member.setEmail(request.getParameter("email"));
+    member.setPassword(request.getParameter("password"));
+    member.setPhoto(request.getParameter("photo"));
+    member.setTel(request.getParameter("tel"));
 
     try {
-      int no = Integer.parseInt(request.getParameter("no"));
-
-      Member member = memberDao.findByNo(no);
-
-      if (member == null) {
-        out.println("해당 번호의 회원이 없습니다.<br>");
-        return;
-      } else {
-
-        memberDao.delete(no);
-        sqlSession.commit();
-
-        out.println("회원을 삭제하였습니다.<br>");
-      }
-
-      out.println("<a href='list'>[목록]</a>");
+      memberDao.insert(member);
+      sqlSession.commit();
+      response.setHeader("Refresh", "1;url=list");
+      request.getRequestDispatcher("MemberAdd.jsp").forward(request, response);
 
     } catch (Exception e) {
-      throw new ServletException(e);
-    }
+      // 오류를 출력할 때 사용할 수 있도록 예외 객체를 저장소에 보관한다.
+      request.setAttribute("error", e);
 
-    out.println("</body>");
-    out.println("</html>");
+      // 오류가 발생하면, 오류 내용을 출력할 뷰를 호출한다.
+      RequestDispatcher 요청배달자 = request.getRequestDispatcher("/Error.jsp");
+      요청배달자.forward(request, response);
+    }
   }
 }
 

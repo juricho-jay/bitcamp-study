@@ -1,9 +1,9 @@
 package com.eomcs.pms.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Collection;
 import javax.servlet.GenericServlet;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -15,7 +15,7 @@ import com.eomcs.pms.domain.Member;
 
 
 @WebServlet("/member/list")
-public class MemberListHandler extends GenericServlet {
+public class MemberListController extends GenericServlet {
   private static final long serialVersionUID = 1L;
 
   MemberDao memberDao;
@@ -27,39 +27,28 @@ public class MemberListHandler extends GenericServlet {
   }
 
   @Override
-  public void service(ServletRequest request, ServletResponse response) 
+  public void service(ServletRequest request, ServletResponse response)
       throws ServletException, IOException {
-
-    response.setContentType("text/html;charset=UTF-8");
-    PrintWriter out = response.getWriter();
-
-    out.println("<html>");
-    out.println("<head>");
-    out.println("   <title>회원목록</title>");
-    out.println("</head>");
-    out.println("<body>");
-    out.println("<h1>[회원 목록]</h1>");
-    out.println("<a href='form'>새회원</a><br>");
-
     try {
-
+      // 클라이언트 요청을 처리하는데 필요한 데이터 준비
       Collection<Member> memberList = memberDao.findAll();
 
-      for (Member member : memberList) {
-        out.printf("%d, <a href='detail?no=%1$d'>%s</a>, %s, %s, %s<br>", 
-            member.getNo(), 
-            member.getName(), 
-            member.getEmail(), 
-            member.getTel(), 
-            member.getRegisteredDate());
-      }
-    } catch (Exception e) {
-      throw new ServletException(e);
-    }
-    out.println("</body>");
-    out.println("</html>");
-  }
+      // 뷰 컴포넌트가 준비한 데이터를 사용할 수 있도록 저장소에 보관한다.
+      request.setAttribute("memberList", memberList);
 
+      // 출력을 담당할 뷰를 호출한다.
+      RequestDispatcher 요청배달자 = request.getRequestDispatcher("/member/MemberList.jsp");
+      요청배달자.forward(request, response);
+
+    } catch (Exception e) {
+      // 오류를 출력할 때 사용할 수 있도록 예외 객체를 저장소에 보관한다.
+      request.setAttribute("error", e);
+
+      // 오류가 발생하면, 오류 내용을 출력할 뷰를 호출한다.
+      RequestDispatcher 요청배달자 = request.getRequestDispatcher("/Error.jsp");
+      요청배달자.forward(request, response);
+    }
+  }
 }
 
 

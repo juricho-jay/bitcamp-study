@@ -9,13 +9,11 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
-// 이 클래스를 실행하려면 이런 명령어를 줘야한다.
 @WebServlet("/hi")
 public class HelloServlet implements Servlet {
 
   @Override
   public void init(ServletConfig config) throws ServletException {
-
   }
 
   @Override
@@ -30,8 +28,6 @@ public class HelloServlet implements Servlet {
     PrintWriter out = res.getWriter();
     out.println("안녕!");
     out.println("Hello!");
-
-    // 이게 바로 핸들러 역할 
   }
 
   @Override
@@ -41,7 +37,6 @@ public class HelloServlet implements Servlet {
 
   @Override
   public void destroy() {
-
   }
 
 }

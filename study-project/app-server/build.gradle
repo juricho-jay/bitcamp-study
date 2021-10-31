@@ -25,7 +25,7 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8';
 }
 
-// 프로젝트에서 외부의 라이브러리를 사용한다면
+// 프로젝트에서 외부의 라이브러리를 사용한 다면
 // 그 라이브러리 파일(.jar)을 다운로드 받을 서버 정보를 설정하라!
 repositories {
     mavenCentral() // https://repo.maven.apache.org/maven2/ 사이트에서 다운로드 받는다.
@@ -36,18 +36,36 @@ repositories {
 //    등록한 라이브러를 자동으로 다운로드 받는다.
 // => 이렇게 다운로드 받은 라이브러리는 컴파일하거나 실행할 때 사용된다.
 dependencies {
-
+  // 라이브러리 유형
+  // 1) implementation
+  //  => 컴파일할 때 사용하고, 배포할 때 포함한다.
+  // 2) providedCompile
+  //  => 컴파일할 때 사용하고, 배포에서 제외한다.
+  // 3) testImplementation
+  //  => 테스트 소스를 컴파일 할 때만 사용, 배포에서 제외한다.
+  
   // 서블릿 API
-  implementation 'javax.servlet:javax.servlet-api:4.0.1'
+  // - 서블릿 컨테이너에 있는 라이브러리다. 따라서 배포할 때 제외해야 한다.
+  // - 프로그램을 개발하는 동안 컴파일할 때 사용해야 하기 때문에 providedCompile로 설정한다.
+  providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
+  
+  // JSP API
+  // - 서블릿 컨테이너에 있는 라이브러리다. 따라서 배포할 때 제외해야 한다.
+  // - 프로그램을 개발하는 동안 컴파일할 때 사용해야 하기 때문에 providedCompile로 설정한다.
+  providedCompile 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
   
   // Google JSON 라이브러리
   implementation 'com.google.code.gson:gson:2.8.8'
+  
   
   implementation 'com.google.guava:guava:30.1-jre'
   testImplementation 'junit:junit:4.13.2'
   
    implementation 'org.mybatis:mybatis:3.5.6'
   implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.4'
+  
+  // JSTL 구현체
+  implementation 'javax.servlet:jstl:1.2'
   
 }
 

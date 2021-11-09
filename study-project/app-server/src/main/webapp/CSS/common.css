@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+header {
+	border: 1px solid red;
+}
+
+footer {
+	border: 1px solid blue;
+}
+
+aside {
+	border: 1px solid green;
+}

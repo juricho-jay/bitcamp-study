@@ -5,6 +5,13 @@
 <html>
 <head>
   <title>회원상세</title>
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="../node_modules/sweetalert2/dist/css/sweeetalert2.css">
+  
+  
+  <script src="../node_modules/@popperjs/core/dist/umd/popper.js"></script>
+  <script src="../node_modules/bootstrap/dist/bootstrap.css"></script>
+  <script src="../node_modules/sweetalert2/dist/sweetalert2.js"></script>
   <style>
   label {
     margin-right: 5px;
@@ -15,7 +22,7 @@
   </style>
 </head>
 <body>
-<h1>회원 상세(MVC)+(EL)</h1>
+<h1>회원 상세(MVC + EL2)</h1>
 <form action='update'>
     <label for='f-no'>번호</label> 
     <input id='f-no' type='text' name='no' value='${member.no}' readonly><br>
@@ -40,6 +47,23 @@
 <button>변경</button>
  <a href='delete?no=${member.no}'>[삭제]</a> <a href='list'>[목록]</a><br>
 </form>
+
+
+
+<script>
+document.querySelector("#member-form").onsubmit = () => {
+	 if(document.querySelector("#f-name").value == "" || 
+			 document.querySelector("f-email").value == "" ||
+			 document.querySelector("#f-password").value == "") {
+		 // window.alert("필수 입력 항목이 비어 있습니다.");
+		 Swal.fire("필수 입력 학목이 비어 있습니다.");
+	return false; -> 서브밋 막힘
+	 }
+	
+};
+
+</script>
+
 
 </body>
 </html>

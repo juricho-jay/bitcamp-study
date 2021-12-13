@@ -33,5 +33,7 @@ public class App {
     System.out.printf("전화: %s\n", tel);
     System.out.printf("가입일: %s\n", now);
 
+    //System.out.println("dff");
+
   }
 }
